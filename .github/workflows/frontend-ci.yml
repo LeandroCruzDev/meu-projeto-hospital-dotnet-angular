@@ -1,0 +1,25 @@
+name: Frontend CI (Angular)
+
+on:
+  push:
+    paths:
+      - 'projectAngular/**'
+      - '.github/workflows/frontend-ci.yml'
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Dependencies
+        run: |
+          cd projectAngular/patient-app
+          npm ci
+      - name: Run Angular Tests
+        run: |
+          cd projectAngular/patient-app
+          npm test -- --watch=false --browsers=ChromeHeadless
