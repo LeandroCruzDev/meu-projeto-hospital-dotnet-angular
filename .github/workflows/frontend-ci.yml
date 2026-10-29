@@ -9,17 +9,24 @@ on:
 jobs:
   test-frontend:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install Dependencies
+          cache: 'npm'
+          cache-dependency-path: 'projectAngular/patient-app/package-lock.json'
+
+      - name: Instalar Dependências
         run: |
           cd projectAngular/patient-app
           npm ci
-      - name: Run Angular Tests
+
+      - name: Executar Testes do Angular
         run: |
           cd projectAngular/patient-app
-          npm test -- --watch=false --browsers=ChromeHeadless
+          npx ng test --watch=false --browsers=ChromeHeadless
