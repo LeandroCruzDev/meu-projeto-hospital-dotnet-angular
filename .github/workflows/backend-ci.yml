@@ -3,17 +3,20 @@ name: Backend CI (.NET)
 on:
   push:
     paths:
-      - 'projectsDotnet/**'
+      - 'PatientDotNet/**'
       - '.github/workflows/backend-ci.yml'
 
 jobs:
   test-backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
+
       - name: Run Tests
-        run: dotnet test projectsDotnet/PatientApi.Tests/PatientApi.Tests.csproj
+        run: dotnet test PatientDotNet/PatientApi.Tests/PatientApi.Tests.csproj
